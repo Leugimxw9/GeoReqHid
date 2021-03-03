@@ -10,4 +10,4 @@ La precipitación efectiva representa la cantidad de agua que quedará en el sue
 
 Para el cálculo de requrimiento de riego:
 
-\[RR = ETc - Pe\]
+!\[RR = ETc - Pe\]
