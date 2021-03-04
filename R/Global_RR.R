@@ -6,6 +6,19 @@
 
 # Creacion de carpetas ----------------------------------------------------
 Global_RR<-function(){
+
+  if(dir.exists("C:/OSGeo4W64/bin/")==FALSE){
+    stop(winDialog("ok","Debe instalar OSGEO4W para las liberías de GDAL/OGR:
+       https://trac.osgeo.org/osgeo4w/"))}else{cat("GDAL/OGR instalado...")}
+  cat("Continuando procesamiento...\n")
+
+  Sys.which("C:/OSGeo4W64/bin/")
+  GDALPATH<-"C:/OSGeo4W64/bin/"
+
+  setwd("~/_Descarga_Datos/MODIS/")
+  Ruta<-"~/_Descarga_Datos/MODIS/"
+
+
 cat("Creando directorios...\n")
 if(dir.exists(paste0("~/_Descarga_Datos/MODIS/",Sys.Date(), sep=" ")) == FALSE){
   dir.create(paste0("~/_Descarga_Datos/MODIS/",Sys.Date(), sep=" "), recursive=TRUE)

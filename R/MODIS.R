@@ -59,12 +59,6 @@ MODIS<-function(Area){
        https://trac.osgeo.org/osgeo4w/"))}else{cat("GDAL/OGR instalado...")}
   cat("Continuando procesamiento...\n")
 
-  Sys.which("C:/OSGeo4W64/bin/")
-  GDALPATH<-"C:/OSGeo4W64/bin/"
-
-  setwd("~/_Descarga_Datos/MODIS/")
-  Ruta<-"~/_Descarga_Datos/MODIS/"
-
   # Login Earthdata
   EarthdataLogin(usr=getPass::getPass("Usuario Earthdata: "),pwd=getPass::getPass("Contraseña Earthdata: "))
 

@@ -5,6 +5,20 @@
 #' @export
 
 Zona_estudio<-function(){
+
+  if(dir.exists("C:/OSGeo4W64/bin/")==FALSE){
+    stop(winDialog("ok","Debe instalar OSGEO4W para las liberías de GDAL/OGR:
+       https://trac.osgeo.org/osgeo4w/"))}else{cat("GDAL/OGR instalado...")}
+  cat("Continuando procesamiento...\n")
+
+
+  Sys.which("C:/OSGeo4W64/bin/")
+  GDALPATH<-"C:/OSGeo4W64/bin/"
+
+  setwd("~/_Descarga_Datos/MODIS/")
+  Ruta<-"~/_Descarga_Datos/MODIS/"
+
+
   cat("\n*** Cargando un vectorial de la zona de estudio ***\n")
   Area<-readOGR(choose.files(default="",caption="Seleccione el archivo vectorial de la zona de estudio:"))
   #Area2<-readOGR("C:/Users/leugi/Documents/Datos geoespaciales/Sinaloa/Culiacan22.shp")
