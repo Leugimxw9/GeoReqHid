@@ -8,6 +8,6 @@ La evapotranspiración se define como la pérdida de humedad del suelo a traves 
 
 La precipitación efectiva representa la cantidad de agua que quedará en el suelo despues de una precipitación.  
 
-Para el cálculo de requrimiento de riego:
+## Funciones
 
-$RR = ETc - Pe$
+### Zona_estudio()
