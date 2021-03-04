@@ -27,7 +27,7 @@ La precipitación efectiva representa la cantidad de agua que quedará en el sue
 ### Modis_mes
 - Suma los datos de evapotranspiración a mm/mes.
 - Guarda los archivos raster procesado.
-- 
+
 ### Datos_Precipitacion
 - Descarga datos de precipitación de climate worldclim.org,
 - Delimta los datos a la zona de estudio.
@@ -52,10 +52,17 @@ La precipitación efectiva representa la cantidad de agua que quedará en el sue
 ## Comando en consola
 
   Zona<-Zona_estudio()
+  
   Modis<-MODIS(Zona)
+  
   ET<-Modis_mes(Zona, Modis)
+  
   Prec<-Datos_Precipitacion(Zona)
+  
   Prec_Efec<-Datos_Precipitacion_efectiva(Prec,Zona)
+  
   Escor<-Datos_Escorrentia(Prec,Prec_Efec,Zona)
+  
   RR<-Requerimiento(ET, Prec_Efec, Zona)
+  
   Vol_ET<-Volumen(ET, Zona)
