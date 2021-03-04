@@ -49,7 +49,21 @@ La precipitación efectiva representa la cantidad de agua que quedará en el sue
 ### Volumen
 - Proporciona los valores de mm a un área determinada convertiendose en m^3. 
 
-## Comando en consola
+## Instalación:
+
+Tener instalado la libreria devtools. Posteriormente instalar: 
+
+- devtools::install_github("Leugimxw9/GeoReqHid")
+
+
+
+### Consola
+
+- Si se desea realizar todo el proceso completo:
+
+ Global_RR()
+ 
+- Si se desea realizar por pasos se recomienda:
 
   Zona<-Zona_estudio()
   
