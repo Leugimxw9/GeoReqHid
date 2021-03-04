@@ -51,7 +51,10 @@ La precipitación efectiva representa la cantidad de agua que quedará en el sue
 
 ## Instalación:
 
+Tener instalado la libreria devtools. Posteriormente instalar: 
 devtools::install_github("Leugimxw9/GeoReqHid")
+
+
 
 ### Consola
 
