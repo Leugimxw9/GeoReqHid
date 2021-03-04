@@ -1,5 +1,5 @@
 Package: GeoReqHid
-Title: What the Package Does (One Line, Title Case)
+Title: Requerimiento de riego con datos MODIS y worldclim.org
 Version: 0.0.0.9000
 Authors@R: person("Miguel Armando", "López Beltrán", email = "miguel.armandolb@uas.edu.mx", role = c("aut", "cre"))
 Description: Estima el requerimiento de riego usando datos del sensor MODIS (MOD16A2) para evapontraspiración, estimación de precipitación efectiva usando datos de worldclim.org y estimación del requerimiento de riego. 
