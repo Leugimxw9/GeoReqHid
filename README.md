@@ -36,7 +36,7 @@ La precipitación efectiva representa la cantidad de agua que quedará en el sue
 ### Datos_Precipitacion_efectiva
 - Estima la precipitación efectiva delimitado a la zona de estudio.
 - Guarda los archivos raster procesado.
-- 
+
 ### Datos_Escorrentia
 - Estima la escorrentía basado en la precipitación y precipitación efectiva.
 - Guarda los archivos raster procesado.
