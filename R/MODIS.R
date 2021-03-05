@@ -128,8 +128,8 @@ MODIS<-function(Area){
     gridded(grd)<-TRUE
     fullgrid(grd)<-TRUE
     #gridded(MD)<-TRUE
-    proj4string(MD)<-CRS("+init=epsg:4326")
-    proj4string(grd)<-CRS("+init=epsg:4326")
+    proj4string(MD)<-CRS("EPSG:4326")
+    proj4string(grd)<-CRS("EPSG:4326")
     idw_model<-gstat(formula= ET~1, data= MD, nmax=length(MD$ET), set= list(idp=2))
     modelo<-predict(object = idw_model, newdata=grd)
     modelo<-raster(modelo)
