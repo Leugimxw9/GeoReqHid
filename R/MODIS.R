@@ -26,6 +26,19 @@ MODIS<-function(Area){
     dir.create(paste0("~/_Descarga_Datos/MODIS/Procesamiento/Raster_procesados/Mensual/",Sys.Date(), sep=" "),recursive=TRUE)
   }
 
+  if(dir.exists("C:/OSGeo4W64/bin/")==FALSE){
+    stop(winDialog("ok","Debe instalar OSGEO4W para las liberías de GDAL/OGR:
+       https://trac.osgeo.org/osgeo4w/"))}else{cat("GDAL/OGR instalado...")}
+  cat("Continuando procesamiento...\n")
+
+
+  Sys.which("C:/OSGeo4W64/bin/")
+  GDALPATH<-"C:/OSGeo4W64/bin/"
+
+  setwd("~/_Descarga_Datos/MODIS/")
+  Ruta<-"~/_Descarga_Datos/MODIS/"
+
+
   Fecha1<-dlgInput("Ingrese la fecha inicial de descarga (Anio-Mes-Dia): ")$res
   Fecha1<-as.Date(Fecha1, format="%Y-%m-%d")
   Verificar<-is.na(Fecha1)
@@ -81,7 +94,7 @@ MODIS<-function(Area){
           begin=Fecha1$beginDOY,
           end=Fecha2$endDOY,
           SDSstring = "1",
-          outProj= "EPSG:4326")
+          outProj= "+init=epsg:4326")
 
   # Procesamiento de Mod16A2 ------------------------------------------------
   cat("\n*** LECTURA Y PROCESAMIENTO DE EVAPOTRANSPIRACIÓN ***\n")

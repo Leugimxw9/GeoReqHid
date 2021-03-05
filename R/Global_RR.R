@@ -131,7 +131,7 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
           begin=Fecha1$beginDOY,
           end=Fecha2$endDOY,
           SDSstring = "1",
-          outProj= "EPSG:4326")
+          outProj= "+init=epsg:4326")
 
   # Procesamiento de Mod16A2 ------------------------------------------------
   cat("\n*** LECTURA Y PROCESAMIENTO DE EVAPOTRANSPIRACIÓN ***\n")
