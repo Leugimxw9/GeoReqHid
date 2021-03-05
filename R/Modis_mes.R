@@ -4,6 +4,7 @@
 #' @param Area Vectorial de la zona de estudio.
 #' @return Devuelve un raster stack con datos de requerimiento de riego limitado a la zona de estudio.
 #' @export
+
 Modis_mes<-function(Area, Modis_datos){
   cat("\n*** Composición mensual de datos modis ***\n")
   #setwd(paste0("~/_Descarga_Datos/MODIS/Procesamiento/Raster_procesados/",Sys.Date(),"/"))

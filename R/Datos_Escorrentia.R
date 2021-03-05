@@ -3,7 +3,7 @@
 #' @details La ecuación utilizada representa la diferencia entre la precipitación y la precipitación efectiva.
 #' @param Precipitacion Raster stack de Precipitación.
 #' @param Precipitacion_efectiva Raster stack de precipitación efectiva.
-#' @return Devuelve un raster stack con datos de escorrentia  limitado a la zona de estudio.
+#' @return Devuelve un raster stack con datos de escorrentia  limitado a la zona de estudi
 #' @export
 
 Datos_Escorrentia<-function(Precipitacion, precipitacion_efectiva){

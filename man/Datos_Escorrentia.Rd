@@ -12,7 +12,7 @@ Datos_Escorrentia(Precipitacion, precipitacion_efectiva)
 \item{Precipitacion_efectiva}{Raster stack de precipitación efectiva.}
 }
 \value{
-Devuelve un raster stack con datos de escorrentia  limitado a la zona de estudio.
+Devuelve un raster stack con datos de escorrentia  limitado a la zona de estudi
 }
 \description{
 Realiza la estimación de la esconrrentía superficial
