@@ -582,16 +582,16 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
   indice<-as.data.frame(indice)
   colnames(indice)<-"Mes"
   Reporte<-as.data.frame(c(indice, R_ET, R_ETc, R_PE, R_RR, R_RR2))
-  max(Reporte$Evapotranspiracion.referencia)
+  #max(Reporte$Evapotranspiracion.referencia)
   cat("\nGuardando gráfico de balance...\n")
   png("~/_Descarga_Datos/Balance.png", width = 2500, height = 2000, res = 250)
-  plot(Reporte$Evapotranspiracion.referencia, ylim=c(0, max(Reporte$Evapotranspiracion.referencia)), type="b", lwd=2,axes=FALSE,
+  plot(Reporte$Evapotranspiracion.referencia..mm., ylim=c(0, max(Reporte$Evapotranspiracion.referencia..mm.)), type="b", lwd=2,axes=FALSE,
        col="red", xlab="Meses", ylab="mm", main="Requerimiento de riego")
   lines(Reporte$Precipitacion.efectiva..mm., type="b", lwd=2,col="blue")
   lines(Reporte$Requermiento.de.riego..mm., type="b", lwd=2, col="green")
-  text(Reporte$Evapotranspiracion.referencia..mm., labels=round(Reporte$Evapotranspiracion.referencia,1), cex=0.75, pos=1, offset = 0.75)
+  text(Reporte$Evapotranspiracion.referencia..mm., labels=round(Reporte$Evapotranspiracion.referencia..mm.,1), cex=0.75, pos=1, offset = 0.75)
   text(Reporte$Precipitacion.efectiva..mm., labels=round(Reporte$Precipitacion.efectiva..mm.,1), cex=0.75, pos=1, offset = 0.75)
-  text(Reporte$Requerimiento.de.riego..mm., labels=round(Reporte$Evapotranspiracion.referencia..mm.,1), cex=0.75, pos=1, offset = 0.75)
+  text(Reporte$Requerimiento.de.riego..mm., labels=round(Reporte$Reporte$Requerimiento.de.riego..mm.,1), cex=0.75, pos=1, offset = 0.75)
   legend("bottomleft", col=c("red", "blue", "green"),
          legend=c("Evapotranspiración de referencia", "Precipitación Efectiva", "Requerimiento de Riego"),lwd=1, bty="n", inset=c(0,1), xpd=TRUE, horiz=TRUE)
   box()
