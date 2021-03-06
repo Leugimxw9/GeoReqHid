@@ -173,7 +173,7 @@ Requerimiento<-function(ET,PE,Area){
   write_xlsx(Reporte, "~/_Descarga_Datos/Reporte.xlsx")
   write.csv(Reporte, file = "~/_Descarga_Datos/Reporte.csv", row.names = TRUE, col.names = TRUE)
   ########################
-  #
+
   cat("\nGuardando raster de Requerimiento de riego...\n")
   col_RB<-colorRampPalette(c("#FFFFCC", "#C7E9B4", "#7FCDBB", "#41B6C4", "#2C7FB8", "#253494"))
 
