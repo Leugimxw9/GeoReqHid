@@ -155,11 +155,8 @@ Requerimiento<-function(ET,PE,Area){
   max(Reporte$Evapotranspiracion.referencia)
   cat("\nGuardando gráfico de balance...\n")
   png("~/_Descarga_Datos/Balance.png", width = 2500, height = 2000, res = 250)
-<<<<<<< HEAD
   plot(Reporte$Evapotranspiracion.referencia..mm., ylim=c(0, max(Reporte$Evapotranspiracion.referencia..mm.)), type="b", lwd=2,axes=FALSE,
-=======
   plot(Reporte$Evapotranspiracion.referencia..mm., ylim=c(0, max(Reporte$Evapotranspiracion.referencia)), type="b", lwd=2,axes=FALSE,
->>>>>>> 12989e1acd018a4c03cc1904a287014d0b687dc6
        col="red", xlab="Meses", ylab="mm", main="Requerimiento de riego")
   lines(Reporte$Precipitacion.efectiva..mm., type="b", lwd=2,col="blue")
   lines(Reporte$Requerimiento.de.riego..mm., type="b", lwd=2, col="green")
