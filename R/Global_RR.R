@@ -215,18 +215,18 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
               Valor<-values(Modis_datos[[i2]])
               as.numeric(valor)
               values(Modis_datos[[i]])<-valor
-              Modis_interpol<-Modis_datos[[i]]
+              Modis_interpol[[i]]<-Modis_datos[[i]]
             }}else{
               y1<-as.numeric(values(Modis_datos[[i-1]]))
               y2<-as.numeric(values(Modis_datos[[i+1]]))
               y<- y1+((8/16))*(y2-y1)
               values(Modis_datos[[i]])<-y
-              Modis_interpol<-Modis_datos[[i]]
+              Modis_interpol[[i]]<-Modis_datos[[i]]
             }
-        }else{Modis_interpol<-Modis_datos[[i]]}
+        }else{Modis_interpol[[i]]<-Modis_datos[[i]]}
       }
-      else{Modis_interpol<-Interpolacion(Modis_datos[[i]],Area)}
-      writeRaster(Modis_interpol, filename= paste0("~/_Descarga_Datos/MODIS/Procesamiento/Raster_procesados/",Sys.Date(),"/", paste0(Nombre[i])), format="GTiff", overwrite=TRUE)
+      else{Modis_interpol[[i]]<-Interpolacion(Modis_datos[[i]],Area)}
+      writeRaster(Modis_interpol[[i]], filename= paste0("~/_Descarga_Datos/MODIS/Procesamiento/Raster_procesados/",Sys.Date(),"/", paste0(Nombre[i])), format="GTiff", overwrite=TRUE)
       #png(filename=paste0("~/_Descarga_Datos/MODIS/Procesamiento/Imagenes/",Sys.Date(),"/", Nombre[i],".png"), width = 1200, height=1200, units="px")
       #plot(Modis_interpol, col=col_RB(maxValue(Modis_interpol)), main="Evapotranspiración", sub=paste0(Nombre[i]),
       #     cex.main=3, cex.sub=2, cex.lab=4)

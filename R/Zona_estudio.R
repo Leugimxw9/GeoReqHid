@@ -5,9 +5,6 @@
 #' @export
 
 Zona_estudio<-function(){
-
-
-
   cat("\n*** Cargando un vectorial de la zona de estudio ***\n")
   Area<-readOGR(choose.files(default="",caption="Seleccione el archivo vectorial de la zona de estudio:"))
   #Area2<-readOGR("C:/Users/leugi/Documents/Datos geoespaciales/Sinaloa/Culiacan22.shp")

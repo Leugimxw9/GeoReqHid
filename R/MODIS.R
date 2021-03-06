@@ -35,9 +35,8 @@ MODIS<-function(Area){
   Sys.which("C:/OSGeo4W64/bin/")
   GDALPATH<-"C:/OSGeo4W64/bin/"
 
-  #setwd("~/_Descarga_Datos/MODIS/")
+  setwd("~/_Descarga_Datos/MODIS/")
   Ruta<-"~/_Descarga_Datos/MODIS/"
-
 
   Fecha1<-dlgInput("Ingrese la fecha inicial de descarga (Anio-Mes-Dia): ")$res
   Fecha1<-as.Date(Fecha1, format="%Y-%m-%d")
@@ -72,6 +71,12 @@ MODIS<-function(Area){
        https://trac.osgeo.org/osgeo4w/"))}else{cat("GDAL/OGR instalado...")}
   cat("Continuando procesamiento...\n")
 
+  Sys.which("C:/OSGeo4W64/bin/")
+  GDALPATH<-"C:/OSGeo4W64/bin/"
+
+  setwd("~/_Descarga_Datos/MODIS/")
+  Ruta<-"~/_Descarga_Datos/MODIS/"
+
   # Login Earthdata
   EarthdataLogin(usr=getPass::getPass("Usuario Earthdata: "),pwd=getPass::getPass("Contraseña Earthdata: "))
 
@@ -98,8 +103,9 @@ MODIS<-function(Area){
 
   # Procesamiento de Mod16A2 ------------------------------------------------
   cat("\n*** LECTURA Y PROCESAMIENTO DE EVAPOTRANSPIRACIÓN ***\n")
+  setwd(paste0("~/_Descarga_Datos/MODIS/",Sys.Date()))
   cat("\nCargando archivos tif...\n")
-  Modis_datos<- list.files(path=paste0("~/_Descarga_Datos/MODIS/",Sys.Date()), pattern = "tif")
+  Modis_datos<- list.files(pattern = "tif")
   Modis_datos<-stack(Modis_datos)
   Nombre<-names(Modis_datos)
   #Nombre
@@ -140,8 +146,8 @@ MODIS<-function(Area){
     gridded(grd)<-TRUE
     fullgrid(grd)<-TRUE
     #gridded(MD)<-TRUE
-    proj4string(MD)<-CRS("EPSG:4326")
-    proj4string(grd)<-CRS("EPSG:4326")
+    proj4string(MD)<-CRS("+init=epsg:4326")
+    proj4string(grd)<-CRS("+init=epsg:4326")
     idw_model<-gstat(formula= ET~1, data= MD, nmax=length(MD$ET), set= list(idp=2))
     modelo<-predict(object = idw_model, newdata=grd)
     modelo<-raster(modelo)
@@ -163,6 +169,7 @@ MODIS<-function(Area){
   #plot(Modis_datos, col=col_RB(maxValue(Modis_datos)))
   i=0
   #RespG<-winDialog("yesno","¿Desea guardar las imágenes raster procesadas?")
+  Modis_interpol<-Modis_datos
   while(i<=NL){
     i<-i+1
     if(i<=NL){
@@ -176,26 +183,26 @@ MODIS<-function(Area){
               Valor<-values(Modis_datos[[i2]])
               as.numeric(valor)
               values(Modis_datos[[i]])<-valor
-              Modis_interpol<-Modis_datos[[i]]
+              Modis_interpol[[i]]<-Modis_datos[[i]]
             }}else{
               y1<-as.numeric(values(Modis_datos[[i-1]]))
               y2<-as.numeric(values(Modis_datos[[i+1]]))
               y<- y1+((8/16))*(y2-y1)
               values(Modis_datos[[i]])<-y
-              Modis_interpol<-Modis_datos[[i]]
+              Modis_interpol[[i]]<-Modis_datos[[i]]
             }
-        }else{Modis_interpol<-Modis_datos[[i]]}
+        }else{Modis_interpol[[i]]<-Modis_datos[[i]]}
       }
-      else{Modis_interpol<-Interpolacion(Modis_datos[[i]],Area)}
-      writeRaster(Modis_interpol, filename= paste0("~/_Descarga_Datos/MODIS/Procesamiento/Raster_procesados/",Sys.Date(),"/", paste0(Nombre[i])), format="GTiff", overwrite=TRUE)
+      else{Modis_interpol[[i]]<-Interpolacion(Modis_datos[[i]],Area)}
+      writeRaster(Modis_interpol[[i]], filename= paste0("~/_Descarga_Datos/MODIS/Procesamiento/Raster_procesados/",Sys.Date(),"/", paste0(Nombre[i])), format="GTiff", overwrite=TRUE)
       #png(filename=paste0("~/_Descarga_Datos/MODIS/Procesamiento/Imagenes/",Sys.Date(),"/", Nombre[i],".png"), width = 1200, height=1200, units="px")
       #plot(Modis_interpol, col=col_RB(maxValue(Modis_interpol)), main="Evapotranspiración", sub=paste0(Nombre[i]),
-       #    cex.main=3, cex.sub=2, cex.lab=4)
+      #     cex.main=3, cex.sub=2, cex.lab=4)
       #dev.off()
     }
   }
 
-  Modis_datos
+  #Modis_datos
   return(Modis_datos)
 }
 
