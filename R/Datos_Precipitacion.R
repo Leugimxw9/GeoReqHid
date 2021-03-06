@@ -22,19 +22,19 @@ Datos_Precipitacion<-function(Area){
 
   cat("\nProcesando datos mundiales de precipitación...\n")
 
-  setwd("~/_Descarga_Datos/Precipitacion/Datos/")
+  #setwd("~/_Descarga_Datos/Precipitacion/Datos/")
 
-  Archivo<-file.exists("wc2.1_30s_prec_01.tif")
+  Archivo<-file.exists("~/_Descarga_Datos/Precipitacion/Datos/wc2.1_30s_prec_01.tif")
   if(Archivo==FALSE){
-    Archivo<-file.exists("Precipitacion.zip")
+    Archivo<-file.exists("~/_Descarga_Datos/Precipitacion/Datos/Precipitacion.zip")
     if(Archivo==TRUE){
-      Prec_datos<- list.files(pattern="*.zip")
+      Prec_datos<- list.files(path="~/_Descarga_Datos/Precipitacion/Datos/", pattern="*.zip")
       cat("\nDescomprimiendo archivo...\n")
       unzip(Prec_datos[1], overwrite = TRUE)
     }else{
       cat("\nDescargando archivo...\n")
-      download.file("http://biogeo.ucdavis.edu/data/worldclim/v2.1/base/wc2.1_30s_prec.zip", dest="Precipitacion.zip")
-      Prec_datos<- "Precipitacion.zip"
+      download.file("http://biogeo.ucdavis.edu/data/worldclim/v2.1/base/wc2.1_30s_prec.zip", dest="~/_Descarga_Datos/Precipitacion/Datos/Precipitacion.zip")
+      Prec_datos<-"~/_Descarga_Datos/Precipitacion/Datos/Precipitacion.zip"
       cat("\nDescomprimiendo archivo...\n")
       unzip(Prec_datos, overwrite = TRUE)
     }
@@ -42,7 +42,7 @@ Datos_Precipitacion<-function(Area){
 
 
   cat("\nCargando datos de precipitación a R...\n")
-  Prec_datos<- list.files(pattern = "tif")
+  Prec_datos<- list.files(path="~/_Descarga_Datos/Precipitacion/Datos/" ,pattern = "tif")
   Prec_datos<- stack(Prec_datos)
   #Prec_datos
   #names(Prec_datos)
@@ -60,7 +60,7 @@ Datos_Precipitacion<-function(Area){
   }
   Area_extension<-extent(bbox(Area))
   Prec_datos@extent<-extent(Area_extension)
-  setwd(paste0("~/_Descarga_Datos/Precipitacion/Procesamiento/",Sys.Date()))
+  #setwd()
   #col_RB<-colorRampPalette(c("Red", "Yellow", "Blue"))
   i=0
   while(i <= nlayers(Prec_datos)){
@@ -68,7 +68,7 @@ Datos_Precipitacion<-function(Area){
     if(i <= nlayers(Prec_datos)){
       cat("Datos restantes: ",(nlayers(Prec_datos)-i), "\n")
       #png(filename=paste0(i,"_",Meses[i],"_Precipitacion.png"), width = 1200, height=1200, units="px")
-      writeRaster(Prec_datos[[i]], filename = paste0(i,"_", Meses[i]), suffix=Meses[i], format="GTiff", overwrite=TRUE)
+      writeRaster(Prec_datos[[i]], filename = paste0("~/_Descarga_Datos/Precipitacion/Procesamiento/",Sys.Date(),i,"_", Meses[i]), suffix=Meses[i], format="GTiff", overwrite=TRUE)
       #plot(Prec_datos[[i]], col=col_RB(maxValue(Prec_datos[[i]])), main="Precipitación", sub=paste0(Meses[i]),
       #     cex.main=3, cex.sub=2, cex.lab=4)
       #dev.off()
@@ -76,3 +76,4 @@ Datos_Precipitacion<-function(Area){
   }
   return(Prec_datos)
 }
+

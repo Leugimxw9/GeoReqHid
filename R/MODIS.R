@@ -35,7 +35,7 @@ MODIS<-function(Area){
   Sys.which("C:/OSGeo4W64/bin/")
   GDALPATH<-"C:/OSGeo4W64/bin/"
 
-  setwd("~/_Descarga_Datos/MODIS/")
+  #setwd("~/_Descarga_Datos/MODIS/")
   Ruta<-"~/_Descarga_Datos/MODIS/"
 
 
@@ -98,9 +98,8 @@ MODIS<-function(Area){
 
   # Procesamiento de Mod16A2 ------------------------------------------------
   cat("\n*** LECTURA Y PROCESAMIENTO DE EVAPOTRANSPIRACIÓN ***\n")
-  setwd(paste0("~/_Descarga_Datos/MODIS/",Sys.Date()))
   cat("\nCargando archivos tif...\n")
-  Modis_datos<- list.files(pattern = "tif")
+  Modis_datos<- list.files(path=paste0("~/_Descarga_Datos/MODIS/",Sys.Date()), pattern = "tif")
   Modis_datos<-stack(Modis_datos)
   Nombre<-names(Modis_datos)
   #Nombre
