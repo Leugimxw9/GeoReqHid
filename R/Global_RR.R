@@ -139,7 +139,7 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
   cat("\n*** LECTURA Y PROCESAMIENTO DE EVAPOTRANSPIRACIÓN ***\n")
   setwd(paste0("~/_Descarga_Datos/MODIS/",Sys.Date()))
   cat("\nCargando archivos tif...\n")
-  Modis_datos<- list.files(pattern = "tif")
+  Modis_datos<- list.files(pattern = ".tif")
   Modis_datos<-stack(Modis_datos)
   Nombre<-names(Modis_datos)
   #Nombre
