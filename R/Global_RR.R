@@ -8,17 +8,6 @@
 # Creacion de carpetas ----------------------------------------------------
 Global_RR<-function(){
 
-  if(dir.exists("C:/OSGeo4W64/bin/")==FALSE){
-    stop(winDialog("ok","Debe instalar OSGEO4W para las liberías de GDAL/OGR:
-       https://trac.osgeo.org/osgeo4w/"))}else{cat("GDAL/OGR instalado...")}
-  cat("Continuando procesamiento...\n")
-
-  Sys.which("C:/OSGeo4W64/bin/")
-  GDALPATH<-"C:/OSGeo4W64/bin/"
-
-  setwd("~/_Descarga_Datos/MODIS/")
-  Ruta<-"~/_Descarga_Datos/MODIS/"
-
 
 cat("Creando directorios...\n")
 if(dir.exists(paste0("~/_Descarga_Datos/MODIS/",Sys.Date(), sep=" ")) == FALSE){
@@ -57,6 +46,19 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Imagenes/",Sys.Date(), sep
 if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep=" ")) == FALSE){
   dir.create(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep=" "), recursive=TRUE)
 }
+
+
+
+  if(dir.exists("C:/OSGeo4W64/bin/")==FALSE){
+    stop(winDialog("ok","Debe instalar OSGEO4W para las liberías de GDAL/OGR:
+       https://trac.osgeo.org/osgeo4w/"))}else{cat("GDAL/OGR instalado...")}
+  cat("Continuando procesamiento...\n")
+
+  Sys.which("C:/OSGeo4W64/bin/")
+  GDALPATH<-"C:/OSGeo4W64/bin/"
+
+  setwd("~/_Descarga_Datos/MODIS/")
+  Ruta<-"~/_Descarga_Datos/MODIS/"
 
   cat("\n*** Cargando un vectorial de la zona de estudio ***\n")
   Area<-readOGR(choose.files(default="",caption="Seleccione el archivo vectorial de la zona de estudio:"))
@@ -130,7 +132,7 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
           extent=A,
           begin=Fecha1$beginDOY,
           end=Fecha2$endDOY,
-          SDSstring = "1",
+          SDSstring = "3",
           outProj= "+init=epsg:4326")
 
   # Procesamiento de Mod16A2 ------------------------------------------------
