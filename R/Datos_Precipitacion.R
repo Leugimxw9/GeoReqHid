@@ -9,6 +9,12 @@ Datos_Precipitacion<-function(Area){
   #winDialog("ok","Comenzando a descargar y procesamiento de datos de precipitación. Fuente: worldclim.org")
 
   #RespG<-winDialog("yesno","¿Desea guardar las imágenes raster procesadas?")
+  if(dir.exists("~/_Descarga_Datos/Precipitacion/Datos/") == FALSE){
+    dir.create("~/_Descarga_Datos/Precipitacion/Datos/", recursive=TRUE)
+  }
+  if(dir.exists(paste0("~/_Descarga_Datos/Precipitacion/Procesamiento/",Sys.Date(), sep=" ")) == FALSE){
+    dir.create(paste0("~/_Descarga_Datos/Precipitacion/Procesamiento/",Sys.Date(), sep=" "), recursive=TRUE)
+  }
 
   cat("\nCargando un vectorial de la zona de estudio... ***\n")
 
