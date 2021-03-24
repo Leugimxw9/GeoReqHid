@@ -9,7 +9,7 @@ Datos_Escorrentia(Precipitacion, precipitacion_efectiva)
 \arguments{
 \item{Precipitacion}{Raster stack de Precipitación.}
 
-\item{Precipitacion_efectiva}{Raster stack de precipitación efectiva.}
+\item{precipitacion_efectiva}{Raster stack de precipitación efectiva.}
 }
 \value{
 Devuelve un raster stack con datos de escorrentia  limitado a la zona de estudi
