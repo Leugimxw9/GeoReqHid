@@ -64,7 +64,7 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
   Area<-readOGR(choose.files(default="",caption="Seleccione el archivo vectorial de la zona de estudio:"))
   #Area2<-readOGR("C:/Users/leugi/Documents/Datos geoespaciales/Sinaloa/Culiacan22.shp")
   Area_proj<-crs(Area)
-  WGS84_4326<-CRS("EPSG:4326")
+  WGS84_4326<-crs("EPSG:4326")
   #WGS84_4326<-CRS("EPSG:4326")
   if(projection(WGS84_4326)==projection(Area_proj)){cat("Proyección correcta.\n")}else{
     cat("\nCambiando proyección a ESPG:4326.\n")
@@ -180,8 +180,8 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
     gridded(grd)<-TRUE
     fullgrid(grd)<-TRUE
     #gridded(MD)<-TRUE
-    proj4string(MD)<-CRS("+init=epsg:4326")
-    proj4string(grd)<-CRS("+init=epsg:4326")
+    proj4string(MD)<-crs("+init=epsg:4326")
+    proj4string(grd)<-crs("+init=epsg:4326")
     idw_model<-gstat(formula= ET~1, data= MD, nmax=length(MD$ET), set= list(idp=2))
     modelo<-predict(object = idw_model, newdata=grd)
     modelo<-raster(modelo)
