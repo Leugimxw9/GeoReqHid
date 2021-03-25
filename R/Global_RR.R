@@ -580,7 +580,7 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
   colnames(R_ET)<-"Evapotranspiracion (mm)"
   R_ETc<-data.frame(cellStats(ETc, stat="mean", na.rm=TRUE))
   colnames(R_ETc)<-"Evapotranspiracion referencia (mm)"
-  R_PE<-data.frame(cellStats(PE1, stat="sum", na.rm=TRUE))
+  R_PE<-data.frame(cellStats(PE1, stat="mean", na.rm=TRUE))
   colnames(R_PE)<-"Precipitacion efectiva (mm)"
   indice<-as.data.frame(indice)
   colnames(indice)<-"Mes"

@@ -139,15 +139,15 @@ Requerimiento<-function(ET,PE,Area){
   #ET<-(ET/1000000)
   #ETc<-(ETc/1000000)
   RR2<-(RR/1000000)*Area_terreno
-  R_RR<-as.data.frame(cellStats(RR, stat="sum", na.rm=TRUE))
+  R_RR<-as.data.frame(cellStats(RR, stat="mean", na.rm=TRUE))
   colnames(R_RR)<-"Requerimiento de riego (mm)"
-  R_RR2<-as.data.frame(cellStats(RR2, stat="sum", na.rm=TRUE))
+  R_RR2<-as.data.frame(cellStats(RR2, stat="mean", na.rm=TRUE))
   colnames(R_RR2)<-"Requerimiento de riego (m^3)"
-  R_ET<-data.frame(cellStats(ET, stat="sum", na.rm=TRUE))
+  R_ET<-data.frame(cellStats(ET, stat="mean", na.rm=TRUE))
   colnames(R_ET)<-"Evapotranspiracion (mm)"
-  R_ETc<-data.frame(cellStats(ETc, stat="sum", na.rm=TRUE))
+  R_ETc<-data.frame(cellStats(ETc, stat="mean", na.rm=TRUE))
   colnames(R_ETc)<-"Evapotranspiracion referencia (mm)"
-  R_PE<-data.frame(cellStats(PE1, stat="sum", na.rm=TRUE))
+  R_PE<-data.frame(cellStats(PE1, stat="mean", na.rm=TRUE))
   colnames(R_PE)<-"Precipitacion efectiva (mm)"
   indice<-as.data.frame(indice)
   colnames(indice)<-"Mes"
@@ -159,7 +159,7 @@ Requerimiento<-function(ET,PE,Area){
        col="red", xlab="Meses", ylab="mm", main="Requerimiento de riego")
   lines(Reporte$Precipitacion.efectiva..mm., type="b", lwd=2,col="blue")
   lines(Reporte$Requerimiento.de.riego..mm., type="b", lwd=2, col="green")
-  text(Reporte$Evapotranspiracion.referencia..mm., labels=round(Reporte$Evapotranspiracion.referencia,1), cex=0.75, pos=1, offset = 0.75)
+  text(Reporte$Evapotranspiracion.referencia..mm., labels=round(Reporte$Evapotranspiracion.referencia..mm.,1), cex=0.75, pos=1, offset = 0.75)
   text(Reporte$Precipitacion.efectiva..mm., labels=round(Reporte$Precipitacion.efectiva..mm.,1), cex=0.75, pos=1, offset = 0.75)
   text(Reporte$Requerimiento.de.riego..mm., labels=round(Reporte$Requerimiento.de.riego..mm.,1), cex=0.75, pos=1, offset = 0.75)
   legend("bottomleft", col=c("red", "blue", "green"),
@@ -167,7 +167,7 @@ Requerimiento<-function(ET,PE,Area){
          lwd=1, bty="n", inset=c(0,1), xpd=TRUE, horiz=TRUE)
   box()
   axis(1, las=1, at=1:length(Reporte$Mes),lab=Reporte$Mes)
-  axis(2, las=1, at=0:round(max(Reporte$Evapotranspiracion.referencia)))
+  axis(2, las=1, at=0:round(max(Reporte$Evapotranspiracion.referencia..mm.)))
   dev.off()
   cat("\nGuardando datos en excel...\n")
   write_xlsx(Reporte, "~/_Descarga_Datos/Reporte.xlsx")
