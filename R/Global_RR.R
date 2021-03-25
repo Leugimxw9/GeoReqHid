@@ -62,7 +62,7 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
 
   cat("\n*** Cargando un vectorial de la zona de estudio ***\n")
   Area<-readOGR(choose.files(default="",caption="Seleccione el archivo vectorial de la zona de estudio:"))
-  #Area2<-readOGR("C:/Users/leugi/Documents/Datos geoespaciales/Sinaloa/Culiacan22.shp")
+  #Area<-readOGR("C:/Users/leugi/Documents/Datos geoespaciales/Sinaloa/Culiacan22.shp")
   Area_proj<-crs(Area)
   WGS84_4326<-crs("EPSG:4326")
   #WGS84_4326<-CRS("EPSG:4326")
@@ -132,8 +132,8 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
           extent=A,
           begin=Fecha1$beginDOY,
           end=Fecha2$endDOY,
-          SDSstring = "1",
-          outProj= "EPSG:4326")
+          SDSstring = "001",
+          outProj= "+init=epsg:4326")
 
   # Procesamiento de Mod16A2 ------------------------------------------------
   cat("\n*** LECTURA Y PROCESAMIENTO DE EVAPOTRANSPIRACIÓN ***\n")
@@ -180,8 +180,8 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
     gridded(grd)<-TRUE
     fullgrid(grd)<-TRUE
     #gridded(MD)<-TRUE
-    proj4string(MD)<-crs("+init=epsg:4326")
-    proj4string(grd)<-crs("+init=epsg:4326")
+    proj4string(MD)<-CRS("+init=epsg:4326")
+    proj4string(grd)<-CRS("+init=epsg:4326")
     idw_model<-gstat(formula= ET~1, data= MD, nmax=length(MD$ET), set= list(idp=2))
     modelo<-predict(object = idw_model, newdata=grd)
     modelo<-raster(modelo)
@@ -200,6 +200,7 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
 
   NL<-(nlayers(Modis_datos))
 
+
   #plot(Modis_datos, col=col_RB(maxValue(Modis_datos)))
   i=0
   #RespG<-winDialog("yesno","¿Desea guardar las imágenes raster procesadas?")
@@ -209,7 +210,7 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
     if(i<=NL){
       cat("Datos restantes: ",(NL-i), "\n")
       Dimen<-dim(Modis_datos[[i]])
-      if(Dimen[1] & Dimen[2] == 1){
+      if(Dimen[1] == 1 & Dimen[2] == 1){
         if (is.na(values(Modis_datos[[i]]))==TRUE) {
           if (i==1){
             i2<-i+1
@@ -225,7 +226,7 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
               values(Modis_datos[[i]])<-y
               Modis_interpol[[i]]<-Modis_datos[[i]]
             }
-        }else{Modis_interpol[[i]]<-Modis_datos[[i]]}
+        }
       }
       else{Modis_interpol[[i]]<-Interpolacion(Modis_datos[[i]],Area)}
       writeRaster(Modis_interpol[[i]], filename= paste0("~/_Descarga_Datos/MODIS/Procesamiento/Raster_procesados/",Sys.Date(),"/", paste0(Nombre[i])), format="GTiff", overwrite=TRUE)
@@ -571,13 +572,13 @@ if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Raster/",Sys.Date(), sep="
   #ET<-(ET/1000000)
   #ETc<-(ETc/1000000)
   RR2<-(RR/1000000)*Area_terreno
-  R_RR<-as.data.frame(cellStats(RR, stat="sum", na.rm=TRUE))
+  R_RR<-as.data.frame(cellStats(RR, stat="mean", na.rm=TRUE))
   colnames(R_RR)<-"Requerimiento de riego (mm)"
-  R_RR2<-as.data.frame(cellStats(RR2, stat="sum", na.rm=TRUE))
+  R_RR2<-as.data.frame(cellStats(RR2, stat="mean", na.rm=TRUE))
   colnames(R_RR2)<-"Requerimiento de riego (m^3)"
-  R_ET<-data.frame(cellStats(ET, stat="sum", na.rm=TRUE))
+  R_ET<-data.frame(cellStats(ET, stat="mean", na.rm=TRUE))
   colnames(R_ET)<-"Evapotranspiracion (mm)"
-  R_ETc<-data.frame(cellStats(ETc, stat="sum", na.rm=TRUE))
+  R_ETc<-data.frame(cellStats(ETc, stat="mean", na.rm=TRUE))
   colnames(R_ETc)<-"Evapotranspiracion referencia (mm)"
   R_PE<-data.frame(cellStats(PE1, stat="sum", na.rm=TRUE))
   colnames(R_PE)<-"Precipitacion efectiva (mm)"

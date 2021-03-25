@@ -98,7 +98,7 @@ MODIS<-function(Area){
           extent=A,
           begin=Fecha1$beginDOY,
           end=Fecha2$endDOY,
-          SDSstring = "1",
+          SDSstring = "001",
           outProj= "+init=epsg:4326")
 
   # Procesamiento de Mod16A2 ------------------------------------------------
