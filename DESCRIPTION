@@ -3,7 +3,7 @@ Title: GeoReqHid
 Version: 0.0.1.1000
 Authors@R: person("Miguel Armando", "López Beltrán", email = "miguel.armandolb@uas.edu.mx", role = c("aut", "cre"))
 Description: Estima el requerimiento de riego usando datos del sensor MODIS (MOD16A2) para evapontraspiración, estimación de precipitación efectiva usando datos de worldclim.org y estimación del requerimiento de riego. 
-License: GNU Affero General Public License v3.0
+License: AGPL v3
 Depends: grDevices, raster, MODIS, rgdal, sp, svDialogs, lubridate, readxl, writexl, getPass, gstat
 Imports: grDevices, raster, MODIS, rgdal, sp, svDialogs, lubridate, readxl, writexl, getPass, gstat
 Encoding: UTF-8
