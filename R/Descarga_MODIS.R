@@ -1,4 +1,8 @@
-
+#' @title Descarga de MOD16A2 (Evapotranspiración).
+#' @description Descarga datos de evapotranspiración
+#' @details La función utiliza como parámetro de entrada un vectorial para delimitar los datos a descargar dentro de un rango de fechas que corresponden al ciclo vegetativo del cultivo.
+#' @param Zona Es el área de estudio cargado con la función Zona_estudio.
+#' @export
 Descarga_MODIS<-function(Zona){
   if(dir.exists(paste0("~/_Descarga_Datos/MODIS/",Sys.Date(), sep=" ")) == FALSE){
     dir.create(paste0("~/_Descarga_Datos/MODIS/",Sys.Date(), sep=" "), recursive=TRUE)
@@ -16,7 +20,7 @@ Descarga_MODIS<-function(Zona){
 
   if(dir.exists("C:/OSGeo4W64/bin/")==FALSE){
     if(dir.exists("C:/Program Files/QGIS 3.18/bin/")==FALSE){
-      stop(winDialog("ok","Debe instalar OSGEO4W para las liberías de GDAL/OGR:
+      stop(svDialogs::winDialog("ok","Debe instalar OSGEO4W para las liberías de GDAL/OGR:
        https://trac.osgeo.org/osgeo4w/"))}else{cat("GDAL/OGR instalado...")
          GDALPATH<-"C:/Program Files/QGIS 3.*/bin/"}
     }else{cat("GDAL/OGR instalado...")
@@ -43,9 +47,9 @@ Descarga_MODIS<-function(Zona){
   Verificar<-is.na(Fecha1)
   cat(paste0("\nFecha inicial de descarga:  ", Fecha1,"\n"))
   while (Verificar==TRUE) {
-    winDialog("ok","Error en el formato de fecha, ingrese en formato:
+    svDialogs::winDialog("ok","Error en el formato de fecha, ingrese en formato:
             Año-Mes-Día.")
-    Fecha1<-dlgInput("Ingrese la fecha inicial de descarga (Año-Mes-Día): ")$res
+    Fecha1<-svDialogs::dlgInput("Ingrese la fecha inicial de descarga (Año-Mes-Día): ")$res
     Fecha1<-as.Date(Fecha1, format="%Y-%m-%d")
     Verificar<-is.na(Fecha1)
     cat(paste0("\nFecha inicial de descarga:  ", Fecha1,"\n"))
@@ -56,7 +60,7 @@ Descarga_MODIS<-function(Zona){
   Verificar<-is.na(Fecha2)
   cat(paste0("Fecha final de descarga:  ",Fecha2,"\n"))
   while (Verificar==TRUE) {
-    winDialog("ok","Error en el formato de fecha, ingrese en formato:
+    svDialogs::winDialog("ok","Error en el formato de fecha, ingrese en formato:
             Año-Mes-Día.")
     Fecha2<-svDialogs::dlgInput("Ingrese la fecha inicial de descarga (Año-Mes-Día): ")$res
     Fecha2<-as.Date(Fecha1, format="%Y-%m-%d")

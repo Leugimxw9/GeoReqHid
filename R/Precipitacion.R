@@ -1,8 +1,12 @@
+#' @title Datos de precipitación
+#' @description Descarga datos de worldclim.org.
+#' @details Descarga datos geoespaciales de precipitación del portal worldclim.org, posteriormente es procesado a la zona de estudio.
+#' @param Zona Es el archivo vectorial cargado anteriormente con la función ZOna_estudio
+#' @return Devuelve un raster stack de datos de precipitación.
+#' @export
 Precipitacion<-function(Zona){
 
-  #winDialog("ok","Comenzando a descargar y procesamiento de datos de precipitación. Fuente: worldclim.org")
 
-  #RespG<-winDialog("yesno","¿Desea guardar las imágenes raster procesadas?")
   if(dir.exists("~/_Descarga_Datos/Precipitacion/Datos/") == FALSE){
     dir.create("~/_Descarga_Datos/Precipitacion/Datos/", recursive=TRUE)
   }
@@ -25,13 +29,13 @@ Precipitacion<-function(Zona){
     if(Archivo==TRUE){
       Prec_datos<- list.files(pattern="*.zip")
       cat("\nDescomprimiendo archivo...\n")
-      unzip(Prec_datos[1], overwrite = TRUE)
+      utils::unzip(Prec_datos[1], overwrite = TRUE)
     }else{
       cat("\nDescargando archivo...\n")
-      download.file("http://biogeo.ucdavis.edu/data/worldclim/v2.1/base/wc2.1_30s_prec.zip", dest="Precipitacion.zip")
+      utils::download.file("http://biogeo.ucdavis.edu/data/worldclim/v2.1/base/wc2.1_30s_prec.zip", dest="Precipitacion.zip")
       Prec_datos<- "Precipitacion.zip"
       cat("\nDescomprimiendo archivo...\n")
-      unzip(Prec_datos, overwrite = TRUE)
+      utils::unzip(Prec_datos, overwrite = TRUE)
     }
   }
 
@@ -53,8 +57,8 @@ Precipitacion<-function(Zona){
   if(Dimen[1] & Dimen[2] != 1){
     Prec_datos<-raster::mask(Prec_datos, Zona)
   }
-  Area_extension<-extent(bbox(Zona))
-  Prec_datos@extent<-extent(Area_extension)
+  Area_extension<-raster::extent(raster::bbox(Zona))
+  Prec_datos@extent<-raster::extent(Area_extension)
   setwd(paste0("~/_Descarga_Datos/Precipitacion/Procesamiento/",Sys.Date()))
   #col_RB<-colorRampPalette(c("Red", "Yellow", "Blue"))
   i=0
@@ -64,7 +68,7 @@ Precipitacion<-function(Zona){
       cat("Datos restantes: ",(raster::nlayers(Prec_datos)-i), "\n")
       raster::writeRaster(Prec_datos[[i]], filename = paste0("~/_Descarga_Datos/Precipitacion/Procesamiento/",Sys.Date(),"/raster/",i,"_P_", Meses[i]), suffix=Meses[i], format="GTiff", overwrite=TRUE)
       grDevices::png(filename=paste0("~/_Descarga_Datos/Precipitacion/Procesamiento/",Sys.Date(),"/mapas/",i,"_",Meses[i],"_Precipitacion.png"), width = 1200, height=1200, units="px")
-      raster::plot(Prec_datos[[i]], col=col_RB(maxValue(Prec_datos[[i]])), main="Precipitación", sub=paste0(Meses[i]),
+      raster::plot(Prec_datos[[i]], col=col_RB(raster::maxValue(Prec_datos[[i]])), main="Precipitación", sub=paste0(Meses[i]),
            cex.main=3, cex.sub=2, cex.lab=4)
       grDevices::dev.off()
     }

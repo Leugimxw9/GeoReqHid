@@ -4,23 +4,17 @@
 \alias{Requerimiento}
 \title{Requerimiento de riego}
 \usage{
-Requerimiento(ET, PE, Area)
+Requerimiento(Zona)
 }
 \arguments{
-\item{ET}{Raster stack de Evapotranspiración.}
-
-\item{PE}{Raster stack de precipitación efectiva.}
-
-\item{Area}{Vectorial de la zona de estudio.}
+\item{Zona}{Es el archivo vectorial cargado anteriormente con la función ZOna_estudio.}
 }
 \value{
-Devuelve un raster stack con datos de requerimiento de riego limitado a la zona de estudio.
+Devuelve un raster stack de requerimiento de riego.
 }
 \description{
-Realiza la estimación del requerimiento de riego
+Estima el requerimiento de riego con los datos de evapotranspiración de MODIS y Precipitación de worldclim.org.
 }
 \details{
-Realiza una homogenización de la resolución espacial entre los datos de entrada.
-Solicita un archivo en Excel con valores de KC, en caso de no disponerlo puede ingresar un valor máximo, o dejarlo solo con la evapotranspiración de referencia para el cálculo.
-Genera un reporte y gráfico de Evapontraspiración de referencia, Precipitación efectiva y requerimiento de riego.
+Descarga datos geoespaciales de precipitación del portal worldclim.org, posteriormente es procesado a la zona de estudio.
 }

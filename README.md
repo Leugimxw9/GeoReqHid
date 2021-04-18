@@ -10,34 +10,34 @@ La precipitación efectiva representa la cantidad de agua que quedará en el sue
 
 ## Funciones
 
-### Global_RR
+### Req_Hid
 - Función que realiza la operación completa generando toda la información solicitada.
 
 ### Zona_estudio
  - La función carga un vectorial para definir la zona de estudio. 
  - Cambia la proyección a EPSG: 4326.
  
-### MODIS
+### Descaga_MODIS
 - Solicita un rango de fechas para descargar el producto MOD16A2 (Evapotranspiración).
 - Descarga el producto MOD16A2 recordado al área de estudio.
 - Aplica el factor de conversión transformando los valores radiometricos a valores de evapotranspiración en mm/8 días.
 - Transforma los valores de relleno a NA. 
 - Guarda los archivos raster procesado.
 
-### Modis_mes
+### ET_mes
 - Suma los datos de evapotranspiración a mm/mes.
 - Guarda los archivos raster procesado.
 
-### Datos_Precipitacion
+### Precipitacion
 - Descarga datos de precipitación de climate worldclim.org,
 - Delimta los datos a la zona de estudio.
 - Guarda los archivos raster procesado.
 
-### Datos_Precipitacion_efectiva
+### Precipitacion_efectiva
 - Estima la precipitación efectiva delimitado a la zona de estudio.
 - Guarda los archivos raster procesado.
 
-### Datos_Escorrentia
+### Escorrentia
 - Estima la escorrentía basado en la precipitación y precipitación efectiva.
 - Guarda los archivos raster procesado.
 
@@ -46,8 +46,6 @@ La precipitación efectiva representa la cantidad de agua que quedará en el sue
 - Genera un reporte en excel con los datos mensuales en mm.
 - Guarda los archivos raster procesado.
 
-### Volumen
-- Proporciona los valores de mm a un área determinada convertiendose en m^3. 
 
 ## Instalación:
 
@@ -61,22 +59,15 @@ Tener instalado la libreria devtools. Posteriormente instalar:
 
 - Si se desea realizar todo el proceso completo:
 
- Global_RR()
+ Req_Hid()
  
 - Si se desea realizar por pasos se recomienda:
 
-  Zona<-Zona_estudio()
+  - Zona<-Zona_estudio()
+  - ET_datos(Zona)
+  - ET_mes(Zona)
+  - Precipitacion(Zona)
+  - Precipitacion_efectiva()
+  - Escorrentia()
+  - Requerimiento(Zona)
   
-  Modis<-MODIS(Zona)
-  
-  ET<-Modis_mes(Zona, Modis)
-  
-  Prec<-Datos_Precipitacion(Zona)
-  
-  Prec_Efec<-Datos_Precipitacion_efectiva(Prec,Zona)
-  
-  Escor<-Datos_Escorrentia(Prec,Prec_Efec,Zona)
-  
-  RR<-Requerimiento(ET, Prec_Efec, Zona)
-  
-  Vol_ET<-Volumen(ET, Zona)

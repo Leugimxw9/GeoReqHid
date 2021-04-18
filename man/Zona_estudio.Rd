@@ -2,16 +2,19 @@
 % Please edit documentation in R/Zona_estudio.R
 \name{Zona_estudio}
 \alias{Zona_estudio}
-\title{Delimitardor a zona de estudio}
+\title{Delimitar a la zona de estudio.}
 \usage{
 Zona_estudio()
 }
 \value{
-Devuelve la zona de estudio cargada en R.
+Devuelve la zona vectorial.
 }
 \description{
-Lee un archivo vectorial de la zona de estudio, verifica que la proyección de coordendas sean geográficas (EPSG:4326).
+Carga un vectorial y devuelve un vectorial para ser usado en otras funciones.
 }
 \details{
-Lee un archivo vectorial, verifica el sistema de proyección de coordenadas en EPSG:4626, en caso de no coincidir se realiza la proyección correspondiente.
+Esta función es requerida para ser usada en otras funciones, debido a que limita a la zona de estudio los datos geoespaciales.
 }
+\concept{**Zona estudio** se refiere al área geográfica de donde se realizará el proceso geoespacial.}
+\keyword{Area}
+\keyword{Vectorial}

@@ -1,3 +1,8 @@
+#' @title Escorrentía
+#' @description Estima la escorrentía generada.
+#' @details Carga datos geoespaciales de precipitación y precipitación efectiva anteriormente generado en las funciones de Precipitación y Precipitación_efectiva.
+#' @return Devuelve un raster stack con los datos de escorrentía generada.
+#' @export
 Escorrentia<-function(){
   cat("Creando directorios...\n")
   if(dir.exists(paste0("~/_Descarga_Datos/Escorrentia/Imagenes/",Sys.Date(), sep=" ")) == FALSE){
@@ -35,7 +40,7 @@ Escorrentia<-function(){
       cat("Datos restantes: ",(raster::nlayers(Escor)-i), "\n")
       raster::writeRaster(Escor[[i]], filename = paste0("~/_Descarga_Datos/Escorrentia/Raster/", Sys.Date(),"/"), paste0(i,"_", Meses[i]), suffix=Meses[i], format="GTiff", overwrite=TRUE)
       grDevices::png(filename=paste0("~/_Descarga_Datos/Escorrentia/Imagenes/", Sys.Date(),"/", i,"_",Meses[i],"_Escorrentia.png"), width = 1200, height=1200, units="px")
-      raster::plot(Escor[[i]], col=col_RB(if(maxValue(Escor[[i]])<0){1}else{maxValue(Escor[[i]])}), main="Escorrentia", sub=paste0(Meses[i]),
+      raster::plot(Escor[[i]], col=col_RB(if(raster::maxValue(Escor[[i]])<0){1}else{raster::maxValue(Escor[[i]])}), main="Escorrentia", sub=paste0(Meses[i]),
            cex.main=3, cex.sub=2, cex.lab=20)
       grDevices::dev.off()
     }

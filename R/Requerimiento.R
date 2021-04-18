@@ -1,3 +1,9 @@
+#' @title Requerimiento de riego
+#' @description Estima el requerimiento de riego con los datos de evapotranspiración de MODIS y Precipitación de worldclim.org.
+#' @details Descarga datos geoespaciales de precipitación del portal worldclim.org, posteriormente es procesado a la zona de estudio.
+#' @param Zona Es el archivo vectorial cargado anteriormente con la función ZOna_estudio.
+#' @return Devuelve un raster stack de requerimiento de riego.
+#' @export
 Requerimiento<-function(Zona){
   cat("\nCalculando el requerimiento de riego...\n")
 
@@ -9,7 +15,7 @@ Requerimiento<-function(Zona){
   }
 
   if(dir.exists(paste0("~/_Descarga_Datos/MODIS/",Sys.Date()))==FALSE){
-    stop(utils::winDialog("ok",paste0("No existe el directorio: ~/_Descarga_Datos/MODIS/",Sys.Date(),"\nDatos de evapotranspiración inexistentes.")))
+    stop(svDialogs::winDialog("ok",paste0("No existe el directorio: ~/_Descarga_Datos/MODIS/",Sys.Date(),"\nDatos de evapotranspiración inexistentes.")))
   }
 
   if(dir.exists(paste0("~/_Descarga_Datos/Precipitacion_Efectiva/Raster/",Sys.Date()))==FALSE){
@@ -86,7 +92,7 @@ Requerimiento<-function(Zona){
     RespT<-utils::winDialog("yesno","¿Desea ingresar un valor de coeficiente de cultivo máximo?")
     if(RespT=="YES"){
       KC=NULL
-      KC<-dlgInput("¿Desea ingrese un valor de coeficiente de cultivo máximo? : ")$res
+      KC<-svDialogs::dlgInput("¿Desea ingrese un valor de coeficiente de cultivo máximo? : ")$res
       for (i in 1:raster::nlayers(ET)) {
         for (j in 1:raster::nlayers(PE)) {
           RT<-names(ET[[i]])==names(PE[[j]])
@@ -160,21 +166,20 @@ Requerimiento<-function(Zona){
   grDevices::png("~/_Descarga_Datos/Balance.png", width = 2500, height = 2000, res = 250)
   plot(Reporte$Evapotranspiracion.referencia..mm., ylim=c(0, max(Reporte$Evapotranspiracion.referencia..mm.)), type="b", lwd=2,axes=FALSE,
        col="red", xlab="Meses", ylab="mm", main="Requerimiento de riego")
-  lines(Reporte$Precipitacion.efectiva..mm., type="b", lwd=2,col="blue")
-  lines(Reporte$Requerimiento.de.riego..mm., type="b", lwd=2, col="green")
-  text(Reporte$Evapotranspiracion.referencia..mm., labels=round(Reporte$Evapotranspiracion.referencia..mm.,1), cex=0.75, pos=1, offset = 0.75)
-  text(Reporte$Precipitacion.efectiva..mm., labels=round(Reporte$Precipitacion.efectiva..mm.,1), cex=0.75, pos=1, offset = 0.75)
-  text(Reporte$Requerimiento.de.riego..mm., labels=round(Reporte$Requerimiento.de.riego..mm.,1), cex=0.75, pos=1, offset = 0.75)
-  legend("bottomleft", col=c("red", "blue", "green"),
+  graphics::lines(Reporte$Precipitacion.efectiva..mm., type="b", lwd=2,col="blue")
+  graphics::lines(Reporte$Requerimiento.de.riego..mm., type="b", lwd=2, col="green")
+  graphics::text(Reporte$Evapotranspiracion.referencia..mm., labels=round(Reporte$Evapotranspiracion.referencia..mm.,1), cex=0.75, pos=1, offset = 0.75)
+  graphics::text(Reporte$Precipitacion.efectiva..mm., labels=round(Reporte$Precipitacion.efectiva..mm.,1), cex=0.75, pos=1, offset = 0.75)
+  graphics::text(Reporte$Requerimiento.de.riego..mm., labels=round(Reporte$Requerimiento.de.riego..mm.,1), cex=0.75, pos=1, offset = 0.75)
+  graphics::legend("bottomleft", col=c("red", "blue", "green"),
          legend=c("Evapotranspiración de referencia", "Precipitación Efectiva", "Requerimiento de Riego"),
          lwd=1, bty="n", inset=c(0,1), xpd=TRUE, horiz=TRUE)
-  box()
-  axis(1, las=1, at=1:length(Reporte$Mes),lab=Reporte$Mes)
-  axis(2, las=1, at=0:round(max(Reporte$Evapotranspiracion.referencia..mm.)))
+  graphics::box()
+  graphics::axis(1, las=1, at=1:length(Reporte$Mes),lab=Reporte$Mes)
+  graphics::axis(2, las=1, at=0:round(max(Reporte$Evapotranspiracion.referencia..mm.)))
   grDevices::dev.off()
   cat("\nGuardando datos en excel...\n")
   writexl::write_xlsx(Reporte, "~/_Descarga_Datos/Reporte.xlsx")
-  write.csv(Reporte, file = "~/_Descarga_Datos/Reporte.csv", row.names = TRUE, col.names = TRUE)
   ########################
 
   cat("\nGuardando raster de Requerimiento de riego...\n")

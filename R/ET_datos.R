@@ -1,3 +1,9 @@
+#' @title Datos MODIS
+#' @description Lectura de datos MOD16A2 y procesamiento.
+#' @details Carga los datos MOD16A2 y realiza el procesamiento  para el área de estudio.
+#' @param Zona Es el vectorial cargado en la función Zona_estudo.
+#' @return Devuelve un raster stack de los datos MOD16A2.
+#' @export
 Lectura_MODIS<-function(Zona){
   cat("\n*** LECTURA Y PROCESAMIENTO DE EVAPOTRANSPIRACIÓN ***\n")
 
@@ -15,7 +21,7 @@ Lectura_MODIS<-function(Zona){
   Dimen<-dim(Modis_datos)
   #Modis_datos<-raster::crop(Modis_datos,raster::extent(Zona))
   if(Dimen[1] & Dimen[2] != 1){
-    Modis_datos<-raster::mask(Modis_datos, Area)
+    Modis_datos<-raster::mask(Modis_datos, Zona)
   }
 
   cat("\nConvirtiendo valores de relleno a NA...\n")
@@ -50,7 +56,7 @@ Lectura_MODIS<-function(Zona){
     idw_model<-gstat::gstat(formula= ET~1, data= MD, nmax=length(MD$ET), set= list(idp=2))
     modelo<-stats::predict(object = idw_model, newdata=grd)
     modelo<-raster::raster(modelo)
-    Area_extension<-raster::extent(bbox(Area))
+    Area_extension<-raster::extent(sp::bbox(Area))
     modelo@extent<-raster::extent(Area_extension)
     modelo<-raster::mask(modelo, Area)
     return(modelo)
@@ -75,19 +81,19 @@ Lectura_MODIS<-function(Zona){
       cat("Datos restantes: ",(NL-i), "\n")
       Dimen<-dim(Modis_datos[[i]])
       if(Dimen[1] & Dimen[2] == 1){
-        if (is.na(values(Modis_datos[[i]]))==TRUE) {
+        if (is.na(raster::values(Modis_datos[[i]]))==TRUE) {
           if (i==1){
             i2<-i+1
-            if (is.na(values(Modis_datos[[i2]]))==FALSE) {
-              Valor<-values(Modis_datos[[i2]])
-              as.numeric(valor)
-              values(Modis_datos[[i]])<-valor
+            if (is.na(raster::values(Modis_datos[[i2]]))==FALSE) {
+              val<-raster::values(Modis_datos[[i2]])
+              as.numeric(val)
+              raster::values(Modis_datos[[i]])<-val
               Modis_interpol[[i]]<-Modis_datos[[i]]
             }}else{
-              y1<-as.numeric(values(Modis_datos[[i-1]]))
-              y2<-as.numeric(values(Modis_datos[[i+1]]))
+              y1<-as.numeric(raster::values(Modis_datos[[i-1]]))
+              y2<-as.numeric(raster::values(Modis_datos[[i+1]]))
               y<- y1+((8/16))*(y2-y1)
-              values(Modis_datos[[i]])<-y
+              raster::values(Modis_datos[[i]])<-y
               Modis_interpol[[i]]<-Modis_datos[[i]]
             }
         }else{Modis_interpol[[i]]<-Modis_datos[[i]]}
@@ -95,7 +101,7 @@ Lectura_MODIS<-function(Zona){
       else{Modis_interpol[[i]]<-Interpolacion(Modis_datos[[i]],Zona)}
       raster::writeRaster(Modis_interpol[[i]], filename= paste0("~/_Descarga_Datos/MODIS/Procesamiento/Raster_procesados/",Sys.Date(),"/", paste0(Nombre[i])), format="GTiff", overwrite=TRUE)
       grDevices::png(filename=paste0("~/_Descarga_Datos/MODIS/Procesamiento/Imagenes/",Sys.Date(),"/", Nombre[i],".png"), width = 1200, height=1200, units="px")
-      raster::plot(Modis_interpol[[i]], col=col_RB(maxValue(Modis_interpol[[i]])), main="Evapotranspiración", sub=paste0(Nombre[i]),
+      raster::plot(Modis_interpol[[i]], col=col_RB(raster::maxValue(Modis_interpol[[i]])), main="Evapotranspiración", sub=paste0(Nombre[i]),
            cex.main=3, cex.sub=2, cex.lab=4)
       grDevices::dev.off()
     }
