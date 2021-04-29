@@ -3,7 +3,7 @@
 #' @export
 Req_Hid<-function(){
   Zona<-Zona_estudio()
-  Descarga_MODIS()
+  Descarga_MODIS(Zona)
   Lectura_MODIS(Zona)
   ET_mes(Zona)
   Precipitacion(Zona)
