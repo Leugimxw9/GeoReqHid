@@ -5,7 +5,7 @@ Req_Hid<-function(){
   Zona<-Zona_estudio()
   Descarga_MODIS(Zona)
   Lectura_MODIS(Zona)
-  ET_mes(Zona)
+  Modis_mes(Zona)
   Precipitacion(Zona)
   Precipitacion_efectiva()
   Escorrentia()
