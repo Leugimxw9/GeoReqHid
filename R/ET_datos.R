@@ -9,7 +9,7 @@ Lectura_MODIS<-function(Zona){
 
   if(dir.exists(paste0("~/_Descarga_Datos/MODIS/",Sys.Date()))==FALSE){
       stop(utils::winDialog("ok",paste0("No existe el directorio: ~/_Descarga_Datos/MODIS/",Sys.Date())))
-      }
+  }
 
 
   setwd(paste0("~/_Descarga_Datos/MODIS/",Sys.Date()))
@@ -25,15 +25,17 @@ Lectura_MODIS<-function(Zona){
   }
 
   cat("\nConvirtiendo valores de relleno a NA...\n")
-  Modis_datos[Modis_datos > 32000]<-NA
+  Modis_datos[Modis_datos > 3200]<-NA
   Modis_datos[Modis_datos < 0]<-NA
 
   cat("\nCalculando factor de conversión...\n")
   Factor_modis<-function(x){
     x*0.1
   }
-
   Modis_datos<-raster::calc(Modis_datos, fun=Factor_modis)
+
+
+
 
   Interpolacion<-function(Modis_datos, Area){
     MD<-as.data.frame(Modis_datos, xy=TRUE)
@@ -108,5 +110,7 @@ Lectura_MODIS<-function(Zona){
   }
 
   #Modis_datos
-  return(Modis_datos)
+
+
+ return(Modis_datos)
 }

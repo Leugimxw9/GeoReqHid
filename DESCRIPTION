@@ -1,6 +1,6 @@
 Package: GeoReqHid
 Title: GeoReqHid
-Version: 0.0.1.2000
+Version: 0.0.1.2100
 Authors@R: person(given="Miguel Armando", family="López Beltrán", email = "miguel.armandolb@uas.edu.mx", role = c("aut", "cre"))
 Description: Estima el requerimiento de riego usando datos del sensor MODIS (MOD16A2) para evapontraspiración, estimación de precipitación efectiva usando datos de worldclim.org y estimación del requerimiento de riego por la diferencia entre evapotranspiración y precipitación efectiva.  
 License: GPL-3

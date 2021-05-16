@@ -8,9 +8,9 @@ Modis_mes<-function(Zona){
   cat("\n*** Composición mensual de datos modis ***\n")
   cat("\nCargando datos...\n")
   if(dir.exists(paste0("~/_Descarga_Datos/MODIS/",Sys.Date()))==FALSE){
-    stop(svDialogs::winDialog("ok",paste0("No existe el directorio: ~/_Descarga_Datos/MODIS/",Sys.Date())))
+    stop(utils::winDialog("ok",paste0("No existe el directorio: ~/_Descarga_Datos/MODIS/",Sys.Date())))
   }
-  setwd(paste0("~/_Descarga_Datos/MODIS/",Sys.Date()))
+  setwd(paste0("~/_Descarga_Datos/MODIS/Procesamiento/Raster_procesados/",Sys.Date(),"/"))
   Modis_datos<- list.files(pattern = ".tif")
   Modis_datos<-raster::stack(Modis_datos)
   Nombre<-names(Modis_datos)
@@ -76,7 +76,7 @@ Modis_mes<-function(Zona){
     }
   }
 
-  svDialogs::winDialog("ok","Procesamiento de datos MODIS terminado.")
+  #utils::winDialog("ok","Procesamiento de datos MODIS terminado.")
   names(ET_mes)<-Rangomensual
   return(ET_mes)
 

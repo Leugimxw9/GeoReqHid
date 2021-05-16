@@ -66,7 +66,7 @@ Precipitacion<-function(Zona){
     i<-i+1
     if(i <= raster::nlayers(Prec_datos)){
       cat("Datos restantes: ",(raster::nlayers(Prec_datos)-i), "\n")
-      raster::writeRaster(Prec_datos[[i]], filename = paste0("~/_Descarga_Datos/Precipitacion/Procesamiento/",Sys.Date(),"/raster/",i,"_P_", Meses[i]), suffix=Meses[i], format="GTiff", overwrite=TRUE)
+      raster::writeRaster(Prec_datos[[i]], filename = paste0("~/_Descarga_Datos/Precipitacion/Procesamiento/",Sys.Date(),"/raster/","P_",i,"_", Meses[i]), suffix=Meses[i], format="GTiff", overwrite=TRUE)
       grDevices::png(filename=paste0("~/_Descarga_Datos/Precipitacion/Procesamiento/",Sys.Date(),"/mapas/",i,"_",Meses[i],"_Precipitacion.png"), width = 1200, height=1200, units="px")
       raster::plot(Prec_datos[[i]], col=col_RB(raster::maxValue(Prec_datos[[i]])), main="Precipitación", sub=paste0(Meses[i]),
            cex.main=3, cex.sub=2, cex.lab=4)

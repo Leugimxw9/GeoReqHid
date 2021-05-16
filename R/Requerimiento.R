@@ -6,6 +6,7 @@
 #' @export
 Requerimiento<-function(Zona){
   cat("\nCalculando el requerimiento de riego...\n")
+  setwd("~")
 
   if(dir.exists(paste0("~/_Descarga_Datos/Requerimiento/Imagenes/",Sys.Date(), sep=" ")) == FALSE){
     dir.create(paste0("~/_Descarga_Datos/Requerimiento/Imagenes/",Sys.Date(), sep=" "), recursive=TRUE)
@@ -28,33 +29,25 @@ Requerimiento<-function(Zona){
   PE<-list.files(paste0("~/_Descarga_Datos/Precipitacion_Efectiva/Raster/",Sys.Date()),pattern = "tif")
   PE<-raster::stack(paste0("~/_Descarga_Datos/Precipitacion_Efectiva/Raster/",Sys.Date(),"/",PE))
 
-  #PE<-Prec_Efec
-  #PE<-Prec_datos
   Area<-Zona
   if (raster::res(ET)!=raster::res(PE)) {
     PE<-raster::resample(PE,ET, method="bilinear")
   }
   Meses_ET<-names(ET)
   tempo<-Sys.Date()
-  #tempo
   lubridate::month(tempo)<-lubridate::month(1)
-  #tempo
   lubridate::day(tempo)<-1
 
   indice<- format(as.Date(names(ET), format = "X%Y.%m.%d"), format="%B %Y")
-  indices <- format(as.Date(names(ET), format = "X%Y.%m.%d"), format = "%m")
-  #indices
+  indices<- format(as.Date(names(ET), format = "X%Y.%m.%d"), format = "%m")
   indices<- as.numeric(indices)
   names(ET)<-indices
-  #ET
   Meses<-seq(as.Date(tempo), by = "month", length.out = 12)
-  indice2<-format(as.Date(Meses, format = "X%Y.%m.%d"), format = "%m")
-  indice2<-as.numeric(indice2)
-  #indice2
-  names(PE)<-indice2
-  #PE
-  RespG<-utils::winDialog("yesnocancel","¿Dispone de datos de coeficiente de cultivo?")
 
+
+  #Operacion de requerimiento de riego
+
+  RespG<-utils::winDialog("yesnocancel","¿Dispone de datos de coeficiente de cultivo?")
   #ET<-projectRaster(ET, crs= crs("+init=epsg:4326"))
   #PE<-projectRaster(PE, crs= crs("+init=epsg:4326"))
 
@@ -71,64 +64,63 @@ Requerimiento<-function(Zona){
     KC<-as.numeric(unlist(KC))
     names(KC)<-indices
     for (i in 1:raster::nlayers(ET)) {
+      TT<-substr(names(ET[[i]]),start=2, stop=4)
       for (j in 1:raster::nlayers(PE)) {
-        RT<-names(ET[[i]])==names(PE[[j]])
-        if(RT==TRUE)
-        {
+        PE[[j]]
+        TT2<-grepl(TT, names(PE[[j]]))
+        if(TT2==TRUE){
           cat("Dato restante: ", paste0(raster::nlayers(ET)-i),"\n")
-          #print(names(PE[[j]]))
-          #print(paste0(KC[i]))
           ETc[[i]]<-ET[[i]]*KC[i]
           RR[[i]]<- ETc[[i]]-PE[[j]]
-          PE1[[i]]<-PE[[j]]
-        }
+          PE1[[i]]<-PE[[j]]}
       }
     }
   }
 
   #RR
-  ET
+  #ET
   if (RespG=="NO"){
     RespT<-utils::winDialog("yesno","¿Desea ingresar un valor de coeficiente de cultivo máximo?")
     if(RespT=="YES"){
       KC=NULL
       KC<-svDialogs::dlgInput("¿Desea ingrese un valor de coeficiente de cultivo máximo? : ")$res
+      KC<-as.numeric(KC)
       for (i in 1:raster::nlayers(ET)) {
+        TT<-substr(names(ET[[i]]),start=2, stop=4)
         for (j in 1:raster::nlayers(PE)) {
-          RT<-names(ET[[i]])==names(PE[[j]])
-          if(RT==TRUE)
-          {
+          PE[[j]]
+          TT2<-grepl(TT, names(PE[[j]]))
+          if(TT2==TRUE){
             cat("Dato restante: ", paste0(raster::nlayers(ET)-i),"\n")
-            #print(names(PE[[j]]))
-            ETc[[i]]<-ET[[i]]*KC
-            RR[[i]]<-ETc[[i]]-PE[[j]]
+            RR[[i]]<-(ET[[i]]*KC)-PE[[j]]
             PE1[[i]]<-PE[[j]]
           }
         }
       }
     }else{
       for (i in 1:raster::nlayers(ET)) {
+        TT<-substr(names(ET[[i]]),start=2, stop=4)
         for (j in 1:raster::nlayers(PE)) {
-          RT<-names(ET[[i]])==names(PE[[j]])
-          if(RT==TRUE)
-          {
+          PE[[j]]
+          TT2<-grepl(TT, names(PE[[j]]))
+          if(TT2==TRUE){
             cat("Dato restante: ", paste0(raster::nlayers(ET)-i),"\n")
-            #print(names(PE[[j]]))
             RR[[i]]<-ET[[i]]-PE[[j]]
             PE1[[i]]<-PE[[j]]
           }
         }
       }
+
     }
   }
 
   if (RespG=="CANCEL"){
     for (i in 1:raster::nlayers(ET)) {
+      TT<-substr(names(ET[[i]]),start=2, stop=4)
       for (j in 1:raster::nlayers(PE)) {
-        RT<-names(ET[[i]])==names(PE[[j]])
-        #cat("\n",paste0(RT))
-        if(RT==TRUE)
-        {
+        PE[[j]]
+        TT2<-grepl(TT, names(PE[[j]]))
+        if(TT2==TRUE){
           cat("Dato restante: ", paste0(raster::nlayers(ET)-i),"\n")
           RR[[i]]<-ET[[i]]-PE[[j]]
           PE1[[i]]<-PE[[j]]
@@ -136,6 +128,7 @@ Requerimiento<-function(Zona){
       }
     }
   }
+  RR
   PE[PE1<0]<-0
   names(RR)<-indice
   RR[RR < 0]<-0
@@ -163,8 +156,11 @@ Requerimiento<-function(Zona){
   Reporte<-as.data.frame(c(indice, R_ET, R_ETc, R_PE, R_RR, R_RR2))
   #max(Reporte$Evapotranspiracion.referencia)
   cat("\nGuardando gráfico de balance...\n")
+  if(max(Reporte$Evapotranspiracion.referencia..mm.)>max(Reporte$Precipitacion.efectiva..mm.)){
+    maxv<-max(Reporte$Evapotranspiracion.referencia..mm.)
+  }else{maxv<-max(Reporte$Precipitacion.efectiva..mm.)}
   grDevices::png("~/_Descarga_Datos/Balance.png", width = 2500, height = 2000, res = 250)
-  plot(Reporte$Evapotranspiracion.referencia..mm., ylim=c(0, max(Reporte$Evapotranspiracion.referencia..mm.)), type="b", lwd=2,axes=FALSE,
+  plot(Reporte$Evapotranspiracion.referencia..mm., ylim=c(0, maxv), type="b", lwd=2,axes=FALSE,
        col="red", xlab="Meses", ylab="mm", main="Requerimiento de riego")
   graphics::lines(Reporte$Precipitacion.efectiva..mm., type="b", lwd=2,col="blue")
   graphics::lines(Reporte$Requerimiento.de.riego..mm., type="b", lwd=2, col="green")
@@ -176,7 +172,7 @@ Requerimiento<-function(Zona){
          lwd=1, bty="n", inset=c(0,1), xpd=TRUE, horiz=TRUE)
   graphics::box()
   graphics::axis(1, las=1, at=1:length(Reporte$Mes),lab=Reporte$Mes)
-  graphics::axis(2, las=1, at=0:round(max(Reporte$Evapotranspiracion.referencia..mm.)))
+  graphics::axis(2, las=1, at=0:round(maxv))
   grDevices::dev.off()
   cat("\nGuardando datos en excel...\n")
   writexl::write_xlsx(Reporte, "~/_Descarga_Datos/Reporte.xlsx")
@@ -184,15 +180,17 @@ Requerimiento<-function(Zona){
 
   cat("\nGuardando raster de Requerimiento de riego...\n")
   col_RB<-grDevices::colorRampPalette(c("#FFFFCC", "#C7E9B4", "#7FCDBB", "#41B6C4", "#2C7FB8", "#253494"))
-  col_RB(raster::maxValue(RR[[i]]))
   i=0
   while(i <= raster::nlayers(RR)){
     i<-i+1
     if(i <= raster::nlayers(RR)){
+      Coln<-round(raster::maxValue(RR[[i]]),0)
+      Coln
+      if(Coln <= 1){Coln<-1}
       cat("Datos restantes: ",raster::nlayers(RR)-i, "\n")
       raster::writeRaster(RR[[i]], filename = paste0("~/_Descarga_Datos/Requerimiento/Raster/", Sys.Date(),"/",i,"_", names(RR[[i]])), suffix=indice[i,], format="GTiff", overwrite=TRUE)
       grDevices::png(filename=paste0("~/_Descarga_Datos/Requerimiento/Imagenes/",Sys.Date(),"/",i, indice[i,],"_Requerimiento.png"), width = 1200, height=1200, units="px")
-      raster::plot(RR[[i]], col=col_RB(raster::maxValue(RR[[i]])), main="Requerimiento de riego", sub=paste0(indice[i,]),cex.main=3, cex.sub=2, cex.lab=20)
+      raster::plot(RR[[i]], col=col_RB(Coln), main="Requerimiento de riego", sub=paste0(indice[i,]),cex.main=3, cex.sub=2, cex.lab=20)
       grDevices::dev.off()
     }
   }
