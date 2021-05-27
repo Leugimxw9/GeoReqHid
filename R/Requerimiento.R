@@ -159,6 +159,7 @@ Requerimiento<-function(Zona){
   if(max(Reporte$Evapotranspiracion.referencia..mm.)>max(Reporte$Precipitacion.efectiva..mm.)){
     maxv<-max(Reporte$Evapotranspiracion.referencia..mm.)
   }else{maxv<-max(Reporte$Precipitacion.efectiva..mm.)}
+
   grDevices::png("~/_Descarga_Datos/Balance.png", width = 2500, height = 2000, res = 250)
   plot(Reporte$Evapotranspiracion.referencia..mm., ylim=c(0, maxv), type="b", lwd=2,axes=FALSE,
        col="red", xlab="Meses", ylab="mm", main="Requerimiento de riego")
@@ -174,6 +175,38 @@ Requerimiento<-function(Zona){
   graphics::axis(1, las=1, at=1:length(Reporte$Mes),lab=Reporte$Mes)
   graphics::axis(2, las=1, at=0:round(maxv))
   grDevices::dev.off()
+
+
+
+  grDevices::png("~/_Descarga_Datos/ET.png", width = 2500, height = 2000, res = 250)
+  plot(Reporte$Evapotranspiracion.referencia..mm., ylim=c(0, maxv), type="b", lwd=2,axes=FALSE,
+       col="red", xlab="Meses", ylab="mm", main="Requerimiento de riego")
+  graphics::text(Reporte$Evapotranspiracion.referencia..mm., labels=round(Reporte$Evapotranspiracion.referencia..mm.,1), cex=0.75, pos=1, offset = 0.75)
+  graphics::box()
+  graphics::axis(1, las=1, at=1:length(Reporte$Mes),lab=Reporte$Mes)
+  graphics::axis(2, las=1, at=0:round(maxv))
+  grDevices::dev.off()
+
+
+  grDevices::png("~/_Descarga_Datos/PE.png", width = 2500, height = 2000, res = 250)
+  plot(Reporte$Precipitacion.efectiva..mm., ylim=c(0, maxv), type="b", lwd=2,axes=FALSE,
+       col="blue", xlab="Meses", ylab="mm", main="Requerimiento de riego")
+  graphics::text(Reporte$Precipitacion.efectiva..mm., labels=round(Reporte$Precipitacion.efectiva..mm.,1), cex=0.75, pos=1, offset = 0.75)
+  graphics::box()
+  graphics::axis(1, las=1, at=1:length(Reporte$Mes),lab=Reporte$Mes)
+  graphics::axis(2, las=1, at=0:round(maxv))
+  grDevices::dev.off()
+
+  grDevices::png("~/_Descarga_Datos/RR.png", width = 2500, height = 2000, res = 250)
+  plot(Reporte$Requerimiento.de.riego..mm., ylim=c(0, maxv), type="b", lwd=2,axes=FALSE,
+       col="green", xlab="Meses", ylab="mm", main="Requerimiento de riego")
+  graphics::text(Reporte$Requerimiento.de.riego..mm., labels=round(Reporte$Requerimiento.de.riego..mm.,1), cex=0.75, pos=1, offset = 0.75)
+  graphics::box()
+  graphics::axis(1, las=1, at=1:length(Reporte$Mes),lab=Reporte$Mes)
+  graphics::axis(2, las=1, at=0:round(maxv))
+  grDevices::dev.off()
+
+
   cat("\nGuardando datos en excel...\n")
   writexl::write_xlsx(Reporte, "~/_Descarga_Datos/Reporte.xlsx")
   ########################

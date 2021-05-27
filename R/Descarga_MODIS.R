@@ -20,8 +20,7 @@ Descarga_MODIS<-function(Zona){
 
   if(dir.exists("C:/OSGeo4W64/bin/")==FALSE){
     if(dir.exists("C:/Program Files/QGIS 3.18/bin/")==FALSE){
-      stop(svDialogs::winDialog("ok","Debe instalar OSGEO4W para las liberías de GDAL/OGR:
-       https://trac.osgeo.org/osgeo4w/"))}else{cat("GDAL/OGR instalado...")
+      stop(svDialogs::winDialog("ok","Debe instalar OSGEO4W para las liberías de GDAL/OGR o QGIS."))}else{cat("GDAL/OGR instalado...")
          GDALPATH<-"C:/Program Files/QGIS 3.*/bin/"}
     }else{cat("GDAL/OGR instalado...")
          GDALPATH<-"C:/OSGeo4W64/bin/"}
