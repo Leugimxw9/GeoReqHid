@@ -71,7 +71,7 @@ Descarga_MODIS<-function(Zona){
   #Fecha1
   Fecha2<-MODIS::transDate(end = Fecha2)
 
-  A<-MODIS::getTile(Zona)
+  A<-MODIS::getTile(sf::st_make_valid(Zona))
 
   MODIS::EarthdataLogin(usr=getPass::getPass("Usuario Earthdata: "), pwd = getPass::getPass("Contraseña Earthdata: "))
 
