@@ -80,7 +80,7 @@ Descarga_MODIS<-function(Zona){
           product=producto,
           collection = "006",
           #product=Producto,
-          extent=raster::extend(Zona),
+          extent=raster::extent(Zona),
           begin=Fecha1$beginDOY,
           end=Fecha2$endDOY,
           SDSstring = bandas,
