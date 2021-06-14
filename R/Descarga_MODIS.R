@@ -71,7 +71,8 @@ Descarga_MODIS<-function(Zona){
   #Fecha1
   Fecha2<-MODIS::transDate(end = Fecha2)
 
-  A<-MODIS::getTile()
+
+
 
   MODIS::EarthdataLogin(usr=getPass::getPass("Usuario Earthdata: "), pwd = getPass::getPass("Contraseña Earthdata: "))
 
@@ -79,7 +80,7 @@ Descarga_MODIS<-function(Zona){
           product=producto,
           collection = "006",
           #product=Producto,
-          extent=A,
+          extent=raster::extend(Zona),
           begin=Fecha1$beginDOY,
           end=Fecha2$endDOY,
           SDSstring = bandas,
