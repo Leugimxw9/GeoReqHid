@@ -4,7 +4,7 @@
 #' @param Zona Es el archivo vectorial cargado anteriormente con la función ZOna_estudio.
 #' @return Devuelve un raster stack de requerimiento de riego.
 #' @export
-KC<-function(Zona) {
+KC<-function(Zona){
   if(dir.exists(paste0("~/_Descarga_Datos/KC/",Sys.Date(), sep=" ")) == FALSE){
     dir.create(paste0("~/_Descarga_Datos/KC/",Sys.Date(), sep=" "), recursive=TRUE)
   }
@@ -214,4 +214,4 @@ KC<-function(Zona) {
 
 }
 
-KC(Zona)
+

@@ -2,6 +2,7 @@
 
 export(Descarga_MODIS)
 export(Escorrentia)
+export(KC)
 export(Lectura_MODIS)
 export(Modis_mes)
 export(Precipitacion)
