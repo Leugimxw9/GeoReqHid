@@ -1,11 +1,11 @@
 Package: GeoReqHid
 Title: GeoReqHid
-Version: 0.0.1.2100
+Version: 0.0.1.2300
 Authors@R: person(given="Miguel Armando", family="López Beltrán", email = "miguel.armandolb@uas.edu.mx", role = c("aut", "cre"))
 Description: Estima el requerimiento de riego usando datos del sensor MODIS (MOD16A2) para evapontraspiración, estimación de precipitación efectiva usando datos de worldclim.org y estimación del requerimiento de riego por la diferencia entre evapotranspiración y precipitación efectiva.  
 License: GPL-3
-Depends: grDevices, raster, MODIS, rgdal, sp, svDialogs, lubridate, readxl, writexl, getPass, gstat, graphics, sf
-Imports: grDevices, raster, MODIS, rgdal, sp, svDialogs, lubridate, readxl, writexl, getPass, gstat, graphics, sf
+Depends: grDevices, raster, MODIS, rgdal, sp, svDialogs, lubridate, readxl, writexl, getPass, gstat, graphics
+Imports: grDevices, raster, MODIS, rgdal, sp, svDialogs, lubridate, readxl, writexl, getPass, gstat, graphics
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
